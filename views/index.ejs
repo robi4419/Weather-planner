@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather planner</title>
+  <link rel="stylesheet" href="styles/main.css"/>
+  <link rel="stylesheet" href="styles/scrollbar.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- <img src="assets/background.jpg" class="background"> -->
+  <h1><a href="/">Weather planner</a></h1>
+  <div class="container">
+    <div class="plan flex-column">
+      <form target="/" method="POST">
+        <div class="form-row" id="row-one">
+          <input type="text" id="name" name="name" placeholder="Plan name"/>
+          <input type="date" id="date" name="date"/>
+        </div>
+        <div class="form-row" id="row-two">
+          <input type="text" id="city" name="city" placeholder="City"/>
+          <input type="text" id="country" name="country" placeholder="Country"/>
+          <input type="submit" id="submit" value="Add plan">
+        </div>
+      </form>
+      <% if(locals.validationError){ %>
+        <span><%= validationError %></span>
+      <% } %>
+    </div>
+    <% if(plans.length != 0){ %>
+      <ul class="plan-list">
+        <% plans.forEach(plan => { %>
+          <li class="plan">
+            <div class="plan-title">
+              <h2><%= plan.name %></h2>
+              <span>
+                <%= new Date(plan.date).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' }) %>
+                in
+                <em><%= plan.city %>, <%= plan.country %></em>
+              </span>
+            </div>
+            <div class="plan-weather">
+              <span>
+                <%= plan.weather.description %>
+                <img src="<%= plan.weather.image %>" width="80px" alt="<%= plan.weather.description %>">
+              </span>
+              <span class="min-max">Min: <%= plan.minTemp %>°C | Max: <%= plan.maxTemp %>°C</span>
+            </div>
+          </li>
+        <% }); %>
+      </ul>
+    <% }else{ %>
+      <p>No plans yet, add some.</p>
+    <% } %>
+  </div>
+</body>
+</html>
