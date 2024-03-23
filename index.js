@@ -7,6 +7,7 @@ const port = 3000;
 
 const WEATHER_API_URL = "https://api.open-meteo.com/v1/forecast";
 const GEOCODING_API_URL = "https://api.geoapify.com/v1/geocode/search";
+const GEOCODING_API_KEY = "your_api_key";
 
 const loadJSON = (path) =>
   JSON.parse(fs.readFileSync(new URL(path, import.meta.url)));
@@ -25,7 +26,7 @@ async function setWeatherData() {
       params: {
         text: `${plans[i].city},${plans[i].country}`,
         format: "json",
-        apiKey: "6c950bfd418843c9901df47659cf0c10"
+        apiKey: GEOCODING_API_KEY
       }
     })
     const coords = {
